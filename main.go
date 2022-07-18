@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"github.com/jasonlvhit/gocron"
+	"github.com/rs/cors"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -60,7 +61,13 @@ func main() {
 	router.HandleFunc("/homestats", serveHomeStats)
 	router.HandleFunc("/baskets", serveBaskets)
 	router.HandleFunc("/tokens", serveTokens)
-	log.Fatal(http.ListenAndServe(":8080", router))
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"https://exposurefi.com"},
+		AllowCredentials: true,
+	})
+
+	handler := c.Handler(router)
+	log.Fatal(http.ListenAndServe(":8080", handler))
 }
 
 func fetchTimer() {

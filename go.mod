@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/gorilla/mux v1.8.0
 	github.com/jasonlvhit/gocron v0.0.1
+	github.com/rs/cors v1.8.2
 	go.mongodb.org/mongo-driver v1.10.0
 )
 
