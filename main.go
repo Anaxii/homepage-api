@@ -86,6 +86,7 @@ func servePrices(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	fetchData()
 	go fetchTimer()
 	router := mux.NewRouter()
 	router.HandleFunc("/homestats", serveHomeStats)
@@ -104,7 +105,6 @@ func main() {
 }
 
 func fetchTimer() {
-	fetchData()
 	s := gocron.NewScheduler()
 	s.Every(60).Seconds().Do(fetchData)
 	<-s.Start()
